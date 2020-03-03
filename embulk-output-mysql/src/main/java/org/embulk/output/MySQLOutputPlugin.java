@@ -30,6 +30,14 @@ public class MySQLOutputPlugin
         @ConfigDefault("null")
         public Optional<String> getDriverPath();
 
+        @Config("driver_class")
+        @ConfigDefault("\"com.mysql.cj.jdbc.Driver\"")
+        public String getDriverClass();
+
+        @Config("driver_protocol")
+        @ConfigDefault("\"jdbc:mysql\"")
+        public String getDriverProtocol();
+
         @Config("host")
         public String getHost();
 
@@ -76,11 +84,10 @@ public class MySQLOutputPlugin
     {
         MySQLPluginTask t = (MySQLPluginTask) task;
 
-        loadDriver("com.mysql.cj.jdbc.Driver", t.getDriverPath());
+        loadDriver(t.getDriverClass(), t.getDriverPath());
 
-        String url = String.format("jdbc:mysql://%s:%d/%s",
-                t.getHost(), t.getPort(), t.getDatabase());
-
+        String url = String.format("%s://%s:%d/%s",
+                t.getDriverProtocol(), t.getHost(), t.getPort(), t.getDatabase());
         Properties props = new Properties();
 
         props.setProperty("rewriteBatchedStatements", "true");
