@@ -1,6 +1,6 @@
 dependencies {
     compile project(':embulk-output-jdbc')
-    compile 'mysql:mysql-connector-java:5.1.44'
-    defaultJdbcDriver 'mysql:mysql-connector-java:5.1.44'
+    compile 'mysql:mysql-connector-java:8.0.19'
+    defaultJdbcDriver 'mysql:mysql-connector-java:8.0.19'
 
 }

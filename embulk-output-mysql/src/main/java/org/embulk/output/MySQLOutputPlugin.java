@@ -76,7 +76,7 @@ public class MySQLOutputPlugin
     {
         MySQLPluginTask t = (MySQLPluginTask) task;
 
-        loadDriver("com.mysql.jdbc.Driver", t.getDriverPath());
+        loadDriver("com.mysql.cj.jdbc.Driver", t.getDriverPath());
 
         String url = String.format("jdbc:mysql://%s:%d/%s",
                 t.getHost(), t.getPort(), t.getDatabase());
@@ -95,17 +95,13 @@ public class MySQLOutputPlugin
 
         switch (t.getSsl()) {
             case DISABLE:
-                props.setProperty("useSSL", "false");
+                props.setProperty("sslMode", "DISABLED");
                 break;
             case ENABLE:
-                props.setProperty("useSSL", "true");
-                props.setProperty("requireSSL", "true");
-                props.setProperty("verifyServerCertificate", "false");
+                props.setProperty("sslMode", "REQUIRED");
                 break;
             case VERIFY:
-                props.setProperty("useSSL", "true");
-                props.setProperty("requireSSL", "true");
-                props.setProperty("verifyServerCertificate", "true");
+                props.setProperty("sslMode", "VERIFY_CA");
                 break;
         }
 
